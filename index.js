@@ -28,7 +28,9 @@ app.post("/signup", async (req, resp) => {
         resp.status(500).json({ message: "Error saving user to the database" });
     }
 });
-
+app.get("/login", (req, resp) => {
+    resp.send("GET request to /signup");
+});
 app.post("/login", async (req, resp) => {
     if (req.body.password && req.body.email) {
         let user = await User.findOne(req.body).select("-password");
