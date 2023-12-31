@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const User = require('./db/user');
+const Product =require('./db/product');
 require('./db/config');
 
 const app = express();
@@ -37,10 +38,16 @@ app.post("/login", async (req, resp) => {
         if (user) {
             resp.send(user);
         } else {
-            resp.send({ result: 'No user found' });
+            resp.send({ result: 'No user found Please signup first' });
         }
     }
 });
+
+app.post("/add-product", async(req,resp)=>{
+    let product = new Product(req.body);
+    let result =await product.save();
+    resp.send(result);
+})
 
 // Start the server on port 5000
 const PORT = 5000;
