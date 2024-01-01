@@ -29,6 +29,7 @@ app.post("/signup", async (req, resp) => {
         resp.status(500).json({ message: "Error saving user to the database" });
     }
 });
+// Loginapi
 app.get("/login", (req, resp) => {
     resp.send("GET request to /signup");
 });
@@ -42,11 +43,23 @@ app.post("/login", async (req, resp) => {
         }
     }
 });
+// add-product api
 
 app.post("/add-product", async(req,resp)=>{
     let product = new Product(req.body);
     let result =await product.save();
     resp.send(result);
+})
+// Product list api
+
+app.get("/products",async(req,resp)=>{
+    let products=await Product.find();
+    if(products.length>0){
+        resp.send(products);
+    }
+    else{
+        resp.send({result:"No Products found"})
+    }
 })
 
 // Start the server on port 5000
