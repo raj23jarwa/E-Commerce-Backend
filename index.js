@@ -62,6 +62,14 @@ app.get("/products",async(req,resp)=>{
     }
 })
 
+// Delete product api
+app.delete("/product/:id",async(req,resp)=>{
+    // resp.send(req.params.id);
+    const result=await Product.deleteOne({_id:req.params.id})
+    resp.send(result);
+
+})
+
 // Start the server on port 5000
 const PORT = 5000;
 app.listen(PORT, () => {
