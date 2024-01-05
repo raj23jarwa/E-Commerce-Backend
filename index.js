@@ -79,6 +79,17 @@ app.get("/product/:id",async(req,resp)=>{
         resp.send({result:"No record found"})
     }
 })
+// update product api
+
+app.put("/product/:id",async(req,resp)=>{
+    let result = await Product.updateOne(
+        {_id:req.params.id},
+        {
+            $set :req.body
+        }
+    )
+    resp.send(result);
+})
 
 // Start the server on port 5000
 const PORT = 5000;
