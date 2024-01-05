@@ -69,6 +69,16 @@ app.delete("/product/:id",async(req,resp)=>{
     resp.send(result);
 
 })
+// api for single get product
+app.get("/product/:id",async(req,resp)=>{
+    let result =await Product.findOne({_id:req.params.id});
+    if(result){
+        resp.send(result)
+    }
+    else{
+        resp.send({result:"No record found"})
+    }
+})
 
 // Start the server on port 5000
 const PORT = 5000;
