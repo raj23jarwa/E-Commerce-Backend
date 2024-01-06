@@ -91,6 +91,34 @@ app.put("/product/:id",async(req,resp)=>{
     resp.send(result);
 })
 
+// Search api
+//  keep in minds we should provide a regular expression object for 
+// the $regex operator, and it's good practice to use the case-insensitive flag ($options: 'i') to make the search case-insensitive.
+
+app.get("/search/:key", async (req, resp) => {
+    try {
+        let result = await Product.find({
+            "$or": [
+                {
+                    name: { $regex: new RegExp(req.params.key, 'i') }
+                },
+                {
+                    company: { $regex: new RegExp(req.params.key, 'i') }
+                },
+                {
+                    category: { $regex: new RegExp(req.params.key, 'i') }
+                }
+            ]
+        });
+
+        resp.json(result);
+    } catch (error) {
+        console.error(error);
+        resp.status(500).send("Internal Server Error");
+    }
+});
+
+
 // Start the server on port 5000
 const PORT = 5000;
 app.listen(PORT, () => {
